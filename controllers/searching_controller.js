@@ -1,11 +1,22 @@
 module.exports.linear = async function (req, res) {
   try {
-    console.log("********HERE", req.body);
-
     let item = req.body.item;
-    let arr = req.body.array;
-    let res = [];
+    let str = req.body.array;
+    let ans = [];
     let pos = 0;
+    let arr = [],
+      temp = "";
+
+    for (let i = 0; i < str.length; i++) {
+      if (str[i] === ",") {
+        arr.push(temp);
+        temp = "";
+      } else {
+        temp = temp + str[i];
+      }
+    }
+
+    arr.push(temp);
 
     for (let val of arr) {
       let v = val;
@@ -16,15 +27,15 @@ module.exports.linear = async function (req, res) {
     pos = 0;
 
     for (let val of arr) {
-      let tempArr = arr;
+      let tempArr = Array.from(arr);
       let v = val.val;
 
       if (val.val !== item) {
         tempArr.splice(pos, 1, { val: v, found: false, cousor: true });
-        res.push(tempArr);
+        ans.push(tempArr);
       } else {
         tempArr.splice(pos, 1, { val: v, found: true, cousor: true });
-        res.push(tempArr);
+        ans.push(tempArr);
 
         break;
       }
@@ -35,7 +46,7 @@ module.exports.linear = async function (req, res) {
     return res.json(200, {
       success: true,
       data: {
-        res: res,
+        res: ans,
       },
     });
   } catch (err) {
