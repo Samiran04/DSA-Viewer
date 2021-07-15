@@ -5,7 +5,8 @@ module.exports.linear = async function (req, res) {
     let ans = [];
     let pos = 0;
     let arr = [],
-      temp = "";
+      temp = "",
+      found = false;
 
     for (let i = 0; i < str.length; i++) {
       if (str[i] === ",") {
@@ -36,7 +37,7 @@ module.exports.linear = async function (req, res) {
       } else {
         tempArr.splice(pos, 1, { val: v, found: true, cousor: true });
         ans.push(tempArr);
-
+        found = true;
         break;
       }
 
@@ -47,6 +48,7 @@ module.exports.linear = async function (req, res) {
       success: true,
       data: {
         res: ans,
+        found: found,
       },
     });
   } catch (err) {
