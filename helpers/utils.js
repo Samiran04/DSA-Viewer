@@ -5,14 +5,14 @@ module.exports.getArray = async function (str) {
 
     for (let i = 0; i < str.length; i++) {
       if (str[i] === ",") {
-        arr.push(temp);
+        arr.push(await Number(temp));
         temp = "";
       } else {
         temp = temp + str[i];
       }
     }
 
-    arr.push(temp);
+    arr.push(await Number(temp));
 
     return arr;
   } catch (err) {

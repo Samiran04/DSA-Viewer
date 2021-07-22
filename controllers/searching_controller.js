@@ -1,3 +1,4 @@
+const { compose } = require("async");
 const util = require("../helpers/utils");
 
 module.exports.linear = async function (req, res) {
@@ -54,7 +55,7 @@ module.exports.linear = async function (req, res) {
 
 module.exports.binarySearch = async function (req, res) {
   try {
-    let item = req.body.item;
+    let item = await Number(req.body.item);
     let str = req.body.array;
     let ans = [];
     let pos = 0;
@@ -90,14 +91,18 @@ module.exports.binarySearch = async function (req, res) {
         ans.push({ shift: null, arr: tempArr });
         found = true;
         break;
-      } else if (arr[mid].val <= item) {
+      } else if (arr[mid].val < item) {
         tempArr.splice(mid, 1, { val: v, found: false, cousor: true });
         ans.push({ shift: "right", arr: tempArr });
-        arr = arr.splice(0, mid);
+        arr = arr.splice(mid + 1, e - mid);
       } else {
         tempArr.splice(mid, 1, { val: v, found: false, cousor: true });
         ans.push({ shift: "left", arr: tempArr });
-        arr = arr.splice(mid, e - mid + 1);
+        arr = arr.splice(0, mid);
+      }
+
+      if (s >= e) {
+        break;
       }
     }
 
