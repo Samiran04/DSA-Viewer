@@ -3,7 +3,7 @@ const util = require("../helpers/utils");
 
 module.exports.linear = async function (req, res) {
   try {
-    let item = req.body.item;
+    let item = await Number(req.body.item);
     let str = req.body.array;
     let ans = [];
     let pos = 0;
@@ -64,7 +64,15 @@ module.exports.binarySearch = async function (req, res) {
 
     arr = await util.getArray(str);
 
-    await arr.sort();
+    await arr.sort(function (x, y) {
+      if (x < y) {
+        return -1;
+      }
+      if (x > y) {
+        return 1;
+      }
+      return 0;
+    });
 
     for (let val of arr) {
       let v = val;
