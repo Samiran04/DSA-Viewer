@@ -1,4 +1,3 @@
-const { compose } = require("async");
 const util = require("../helpers/utils");
 
 module.exports.linear = async function (req, res) {
