@@ -11,19 +11,23 @@ module.exports.bubbleSort = async function (req, res) {
 
     for (let val of arr) {
       let v = val;
-      arr.splice(pos, 1, { val: v, type: "", cousor: false });
+      arr.splice(pos, 1, { val: v, type: "third", cousor: false });
       pos++;
     }
 
     for (let i = 1; i < arr.length; i++) {
       for (let j = i; j >= 1; j--) {
-        let tempArr = Array.from(arr);
+        let tempArr = []; //= Array.from(arr);
 
-        if (arr[j].val < arr[j - 1].val) {
+        for (let v of arr) {
+          tempArr.push(JSON.parse(JSON.stringify(v)));
+        }
+
+        if (tempArr[j].val < tempArr[j - 1].val) {
           tempArr[j].cousor = true;
           tempArr[j - 1].cousor = true;
-          tempArr[j].type = "second";
-          tempArr[j - 1].type = "first";
+          tempArr[j].type = "first";
+          tempArr[j - 1].type = "second";
 
           ans.push(tempArr);
 
